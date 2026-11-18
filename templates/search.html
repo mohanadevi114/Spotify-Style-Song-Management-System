@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spotify - Search & Discover</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <header class="navbar">
+            <h2>🎵 Spotify</h2>
+            <nav>
+                <a href="/home">Home</a>
+                <a href="/search" class="active">Search</a>
+                <a href="/profile">Profile</a>
+                <span class="user-greet">👋 {{ username }}</span>
+                <a href="/logout" class="logout-btn">Logout</a>
+            </nav>
+        </header>
+
+        <div class="search-box">
+            <form action="/search" method="GET">
+                <input type="text" name="query" value="{{ query }}" placeholder="Search by song, artist or genre...">
+                <button type="submit" class="btn-green">Search</button>
+            </form>
+        </div>
+
+        <div class="section-box">
+            <h2>🎵 Song Results</h2>
+            {% if songs %}
+                <ul class="song-list">
+                    {% for song in songs %}
+                    <li class="song-item">
+                        <div>
+                            <strong>{{ song.song_name }}</strong> - {{ song.artist }}
+                        </div>
+                        <audio controls src="{{ url_for('static', filename=song.file_path) }}"></audio>
+                        
+                        <div class="action-buttons">
+                            <!-- Add to Playlist -->
+                            <form action="/add_to_playlist" method="POST" style="display:inline;">
+                                <input type="hidden" name="song_id" value="{{ song.song_id }}">
+                                <select name="playlist_id" required>
+                                    <option value="" disabled selected>Select Playlist</option>
+                                    {% for pl in playlists %}
+                                        <option value="{{ pl.playlist_id }}">{{ pl.playlist_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="btn-small">Add</button>
+                            </form>
+
+                            <!-- Add to Favourite -->
+                            <form action="/add_favourite/{{ song.song_id }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn-fav">❤️ Fav</button>
+                            </form>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="empty-msg">No songs found.</p>
+            {% endif %}
+        
+</body>
+</html>

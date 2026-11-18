@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Navigation Header -->
+        <header class="navbar">
+            <h2>🎵 Spotify</h2>
+            <nav>
+                <a href="/home" class="active">Home</a>
+                <a href="/search">Search</a>
+                <span class="user-greet">👋 {{ username }}</span>
+                <!-- Logout Link -->
+                <a href="/logout" class="logout-btn">Logout</a>
+            </nav>
+        </header>
+
+        <div class="welcome-section">
+            <h1>Welcome to Spotify</h1>
+            <h2>Popular Albums</h2>
+        </div>
+
+        <!-- Album Cards Grid -->
+        <div class="album-grid">
+            {% if albums %}
+                {% for album in albums %}
+                <div class="album-card" onclick="window.location.href='/search'">
+                    <div class="album-icon">🎵</div>
+                    <div class="album-info">
+                        <h3>{{ album.album_name }}</h3>
+                        <p class="artist-name">{{ album.artist }}</p>
+                        <span class="genre-tag">{{ album.genre }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="no-albums">No albums found in database.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

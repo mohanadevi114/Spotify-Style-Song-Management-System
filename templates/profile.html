@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify - User Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Navbar -->
+        <header class="navbar">
+            <h2>🎵 Spotify</h2>
+            <nav>
+                <a href="/home">Home</a>
+                <a href="/search">Search</a>
+                <a href="/profile" class="active">Profile</a>
+                <span class="user-greet">👋 {{ username }}</span>
+                <a href="/logout" class="logout-btn">Logout</a>
+            </nav>
+        </header>
+
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-avatar">👤</div>
+            <div class="profile-details">
+                <h1>{{ user.username }}</h1>
+                <p>📧 {{ user.email }}</p>
+            </div>
+        </div>
+
+        <!-- Create Playlist Section -->
+        <div class="section-box">
+            <h2>➕ Create New Playlist</h2>
+            <form action="/create_playlist" method="POST" class="inline-form">
+                <input type="text" name="playlist_name" placeholder="Enter Playlist Name" required>
+                <button type="submit" class="btn-green">Create Playlist</button>
+            </form>
+        </div>
+
+        <!-- Favourites Section -->
+        <div class="section-box">
+            <h2>❤️ Favourite Songs</h2>
+            {% if fav_songs %}
+                <ul class="song-list">
+                    {% for song in fav_songs %}
+                    <li class="song-item">
+                        <div>
+                            <strong>{{ song.song_name }}</strong> - {{ song.artist }}
+                        </div>
+                        <audio controls src="{{ url_for('static', filename=song.file_path) }}"></audio>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="empty-msg">No favourite songs added yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Playlists Section -->
+        <div class="section-box">
+            <h2>🎧 My Playlists</h2>
+            {% if playlists %}
+                {% for pl in playlists %}
+                <div class="playlist-card">
+                    <h3>📁 {{ pl.playlist_name }}</h3>
+                    {% if pl.songs %}
+                        <ul class="song-list">
+                            {% for song in pl.songs %}
+                            <li class="song-item">
+                                <div>
+                                    <strong>{{ song.song_name }}</strong> - {{ song.artist }}
+                                </div>
+                                <audio controls src="{{ url_for('static', filename=song.file_path) }}"></audio>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="empty-msg">No songs in this playlist.</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="empty-msg">No playlists created yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

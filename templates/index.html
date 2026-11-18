@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Clone</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body style="background-color: #121212; color: white; font-family: Arial, sans-serif; margin: 0; padding-bottom: 90px;">
+
+    <!-- Navigation Header -->
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background-color: #000;">
+        <h2 style="color: #1DB954; margin: 0;">♫ Spotify</h2>
+        <div style="display: flex; gap: 20px;">
+            <a href="/" style="color: white; text-decoration: none; font-weight: bold;">Home</a>
+            <a href="/search" style="color: #b3b3b3; text-decoration: none;">Search</a>
+            <a href="/playlist" style="color: #b3b3b3; text-decoration: none;">Playlist</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div style="padding: 30px;">
+        <h1>Welcome to Spotify</h1>
+        
+        <h2>Popular Albums</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="background: #181818; padding: 15px; border-radius: 8px; width: 180px; text-align: center; cursor: pointer;">
+                <div style="font-size: 50px;">🎧</div>
+                <h3>Tamil Hits</h3>
+                <p style="color: #b3b3b3; font-size: 14px;">Popular Songs</p>
+            </div>
+            <div style="background: #181818; padding: 15px; border-radius: 8px; width: 180px; text-align: center; cursor: pointer;">
+                <div style="font-size: 50px;">🎵</div>
+                <h3>Melody Hits</h3>
+                <p style="color: #b3b3b3; font-size: 14px;">Best Melodies</p>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 40px;">Available Songs</h2>
+        <div id="songs-list" style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Database songs will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <!-- Persistent Bottom Music Player -->
+    <div id="player-bar" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #181818; border-top: 1px solid #282828; padding: 15px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box;">
+        <div style="width: 25%;">
+            <p id="now-playing-title" style="margin: 0; font-weight: bold; color: #1DB954;">Select a song to play</p>
+        </div>
+        <div style="width: 50%; text-align: center;">
+            <audio id="main-audio" controls style="width: 100%; max-width: 500px;">
+                <source id="audio-src" src="" type="audio/mpeg">
+                Your browser does not support audio playback.
+            </audio>
+        </div>
+        <div style="width: 25%;"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
